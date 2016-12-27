@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -25,7 +26,7 @@ import java.io.IOException;
 public class LoginFragment extends Fragment {
 
     private static final String TAG = ".LoginFragment";
-    String dificultad=""; //esta variable almacena el nivel de dificultad dependiendo del radio button seleccionado
+    String dificultad="null"; //esta variable almacena el nivel de dificultad dependiendo del radio button seleccionado
     RadioGroup rdgGrupo; //los diferenctes radio buttons
     Button btn;
     EditText edt;
@@ -63,13 +64,35 @@ public class LoginFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (camposCorrectos()){
+                    Intent intent= new Intent(getActivity(), CronoActivity.class);
+                    intent.putExtra("nombreUsu",edt.getText().toString());
+                    intent.putExtra("dificult",dificultad);
+                    startActivity(intent);
+                }
 
-                Intent intent= new Intent(getActivity(), CronoActivity.class);
-                intent.putExtra("nombreUsu",edt.getText().toString());
-                intent.putExtra("dificult",dificultad);
-                startActivity(intent);
             }
         });
         return view;
+    }
+
+    public boolean camposCorrectos(){
+        if (edt.getText().length() == 0 || edt.getText().toString().equals(" ")){
+            edt.setError("Campo vacío");
+            return false;
+        }
+        else if(edt.getText().length() > 20){
+            edt.setError("El nombre de usuario no puede tener mas de 20 caraceres");
+            return false;
+        }
+        else{ //campo nombre de usuario correcto
+            if (dificultad.equals("null")){
+                Log.e(TAG,"No hay dificultad seleccionada");
+                Toast.makeText(LoginFragment.this.getActivity(),"Dificultad no seleccionada",Toast.LENGTH_LONG).show();
+                return false;
+            }
+            else
+                return true;
+        }
     }
 }
