@@ -1,6 +1,7 @@
 package com.example.ngel.crono;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -19,7 +20,6 @@ public class CronoFragment extends Fragment {
 
     String nombreUsuario,dificultad,resultado; //recuperado del activity anterior
     long start,end;
-    double tiempo1,tiempo2;
     int pulsacion=0;
     ImageButton btnGo;
     TextView t;
@@ -50,6 +50,12 @@ public class CronoFragment extends Fragment {
                     end = System.currentTimeMillis(); //se para el crono
                     resultado = getResultado(start,end,Double.parseDouble(dificultad)); //si devuleve positivo es que se ha pasado
                     System.out.println("El resultado obtenido es: "+resultado);
+
+                    Intent intent= new Intent(getActivity(), MainActivity.class);
+                    intent.putExtra("nombreUsu",nombreUsuario);
+                    intent.putExtra("dificult",dificultad);
+                    intent.putExtra("resultado",resultado);
+                    startActivity(intent);
                 }
             }
         });

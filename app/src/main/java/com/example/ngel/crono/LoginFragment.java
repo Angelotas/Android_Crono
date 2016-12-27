@@ -77,6 +77,8 @@ public class LoginFragment extends Fragment {
     }
 
     public boolean camposCorrectos(){
+        //Para validar que el nombre de usuario no está vacío y su longitud es menor de 20 caracteres
+        //Para validar que se ha seleccionado algún radiobutton
         if (edt.getText().length() == 0 || edt.getText().toString().equals(" ")){
             edt.setError("Campo vacío");
             return false;
