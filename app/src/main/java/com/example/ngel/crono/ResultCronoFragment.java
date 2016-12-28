@@ -5,13 +5,11 @@ import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +19,6 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 
 /**
  * Created by Ángel on 27/12/2016.
@@ -158,12 +154,12 @@ public class ResultCronoFragment extends Fragment {
                 ContentValues values = new ContentValues();  //mapea los nombres de la base de datos con sus valores correspondientes.
                 values.clear(); //se limpia la base de datos
                 //mapeo de datos para cada elemento de la tabla
-                values.put(StatusContract.Column.ID,""); //se deja vacío ya que es autoincrement
-                values.put(StatusContract.Column.USER, params[0]);
-                values.put(StatusContract.Column.DIFIC, params[1]);
-                values.put(StatusContract.Column.RESULT, params[2]);
+                values.put(CronoContract.Column.ID,""); //se deja vacío ya que es autoincrement
+                values.put(CronoContract.Column.USER, params[0]);
+                values.put(CronoContract.Column.DIFIC, params[1]);
+                values.put(CronoContract.Column.RESULT, params[2]);
 
-                db.insert(StatusContract.TABLE, null, values); //se el inserta el contentValues en la bd
+                db.insert(CronoContract.TABLE, null, values); //se el inserta el contentValues en la bd
                 db.close();
                 return ("Se ha insertado correctamente los datos ");
             }
@@ -171,7 +167,6 @@ public class ResultCronoFragment extends Fragment {
                 return ("Fallo en la inserccion de la bd");
 
             }
-
         }
 
         protected void onPostExecute(String result) {

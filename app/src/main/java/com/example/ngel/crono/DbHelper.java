@@ -15,7 +15,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     // Constructor
     public DbHelper(Context context) {
-        super(context, StatusContract.DB_NAME, null, StatusContract.DB_VERSION);
+        super(context, CronoContract.DB_NAME, null, CronoContract.DB_VERSION);
     }
 
     //Llamado para crear la tabla
@@ -23,11 +23,11 @@ public class DbHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         //id (int)  nombre de usuario (text)  dificultad(text)  resultado(text)
         String sql = String.format("create table %s (%s int primary key autoincrement, %s text, %s text, %s text)",
-                StatusContract.TABLE,
-                StatusContract.Column.ID,
-                StatusContract.Column.USER,
-                StatusContract.Column.DIFIC,
-                StatusContract.Column.RESULT);
+                CronoContract.TABLE,
+                CronoContract.Column.ID,
+                CronoContract.Column.USER,
+                CronoContract.Column.DIFIC,
+                CronoContract.Column.RESULT);
         Log.d(TAG, "onCreate con SQL: " + sql);
         db.execSQL(sql);
 
@@ -36,7 +36,7 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         //solo en caso de tener una versión mas nueva
-        db.execSQL("drop table if exists " + StatusContract.TABLE); //elimina bbdd anterior
+        db.execSQL("drop table if exists " + CronoContract.TABLE); //elimina bbdd anterior
         onCreate(db); // crea una base de datos nueva
         Log.d(TAG, "onUpgrade");
     }

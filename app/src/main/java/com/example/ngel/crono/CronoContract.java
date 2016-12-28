@@ -6,7 +6,7 @@ package com.example.ngel.crono;
 
 import android.provider.BaseColumns;
 
-public class StatusContract {
+public class CronoContract {
 
     public static final String DB_NAME = "crono.db";
     public static final int DB_VERSION = 1;
