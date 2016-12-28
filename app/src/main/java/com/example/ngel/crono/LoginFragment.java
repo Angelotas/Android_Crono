@@ -30,15 +30,12 @@ public class LoginFragment extends Fragment {
     RadioGroup rdgGrupo; //los diferenctes radio buttons
     Button btn;
     EditText edt;
-    DbHelper dbHelper;
-    SQLiteDatabase db;
+
 
     public View onCreateView(final LayoutInflater inflater, ViewGroup
             container, Bundle savedInstanceState){
 
         View view = inflater.inflate(R.layout.fragment_login,container,false);
-
-        dbHelper = new DbHelper(getActivity()); //operaciones con la BD
 
         edt = (EditText) view.findViewById(R.id.txtNombre); //nombre de usuario
 
@@ -66,11 +63,10 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 if (camposCorrectos()){
                     Intent intent= new Intent(getActivity(), CronoActivity.class);
-                    intent.putExtra("nombreUsu",edt.getText().toString());
+                    intent.putExtra("nombreUsu",edt.getText().toString().toUpperCase());
                     intent.putExtra("dificult",dificultad);
                     startActivity(intent);
                 }
-
             }
         });
         return view;
@@ -89,7 +85,6 @@ public class LoginFragment extends Fragment {
         }
         else{ //campo nombre de usuario correcto
             if (dificultad.equals("null")){
-                Log.e(TAG,"No hay dificultad seleccionada");
                 Toast.makeText(LoginFragment.this.getActivity(),"Dificultad no seleccionada",Toast.LENGTH_LONG).show();
                 return false;
             }

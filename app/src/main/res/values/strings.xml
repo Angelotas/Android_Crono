@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Crono</string>
+    <string name="botonjugardeNuevo">Jugar de nuevo</string>
+    <string name="botonInicio">Inicio</string>
+    <string name="botonCompartir">Compartir</string>
 </resources>

@@ -29,11 +29,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        this.onBackPressed();
 
         //DEFINICIÓN DE Toolbar
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         //DEFINICIÓN DE ViewPager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -52,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(new RankingCronoFragment(), "Resultado General"); //Pestaña 2
         viewPager.setAdapter(adapter); //se le asigna el adapter al viewPager
     }
+
+    @Override
+    public void onBackPressed() {} //para que no pueda regresar al activity anterior
 
     private class ViewPagerAdapter extends FragmentPagerAdapter {
         //Esta clase actua como manejador de las pestañas => sabiendo cual se selecciona crea un determiando fragment u otro

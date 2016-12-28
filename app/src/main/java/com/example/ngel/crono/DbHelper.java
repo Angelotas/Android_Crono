@@ -21,7 +21,8 @@ public class DbHelper extends SQLiteOpenHelper {
     //Llamado para crear la tabla
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql = String.format("create table %s (%s int primary key autoincrement, %s text, %s text, %s int)",
+        //id (int)  nombre de usuario (text)  dificultad(text)  resultado(text)
+        String sql = String.format("create table %s (%s int primary key autoincrement, %s text, %s text, %s text)",
                 StatusContract.TABLE,
                 StatusContract.Column.ID,
                 StatusContract.Column.USER,

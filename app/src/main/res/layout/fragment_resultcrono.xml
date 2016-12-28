@@ -2,10 +2,56 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondocrono">
+    android:background="@drawable/fondocrono"
+    android:gravity="center|top">
     <TextView
+        android:id="@+id/txtResultado"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textSize="30dp"
+        android:textAlignment="center"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txtResultado2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="40dp"
+        android:textSize="50dp"
+        android:textAlignment="center"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/botonInicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fragment resultado individual"/>
+        android:textSize="18dp"
+        android:drawableRight="@drawable/inicio_opt"
+        android:drawablePadding="5dp"
+        android:textColor="#232323"
+        android:text="@string/botonInicio"/>
+
+    <Button
+        android:id="@+id/botonJugardeNuevo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:textColor="#232323"
+        android:drawablePadding="5dp"
+        android:drawableRight="@drawable/reiniciar"
+        android:text="@string/botonjugardeNuevo"/>
+
+    <Button
+        android:id="@+id/botonCompartir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:drawablePadding="5dp"
+        android:layout_marginTop="20dp"
+        android:drawableRight="@drawable/compartir"
+        android:textColor="#232323"
+        android:text="@string/botonCompartir"/>
 
 </LinearLayout>
