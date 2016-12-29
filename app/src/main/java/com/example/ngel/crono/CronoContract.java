@@ -14,7 +14,7 @@ public class CronoContract {
     public static final int DB_VERSION = 1;
     public static final String TABLE = "puntuaciones";
 
-    public static final String DEFAULT_SORT = Column.ID + " DESC";
+    public static final String DEFAULT_SORT = Column.RESULT + " ASC Limit 5";
 
     //CONSTANTES CONTENT PROVIDER
     //URI => content://com.example.ngel.crono.CronoProvider/puntuaciones
@@ -29,5 +29,4 @@ public class CronoContract {
         public static final String DIFIC = "dificultad";
         public static final String RESULT = "resultado";
     }
-
 }

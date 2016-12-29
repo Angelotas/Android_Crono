@@ -2,6 +2,7 @@ package com.example.ngel.crono;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -157,7 +159,6 @@ public class ResultCronoFragment extends Fragment {
                 ContentValues values = new ContentValues();  //mapea los nombres de la base de datos con sus valores correspondientes.
                 values.clear(); //se limpia la base de datos
                 //mapeo de datos para cada elemento de la tabla
-                values.put(CronoContract.Column.ID,""); //se deja vacío ya que es autoincrement
                 values.put(CronoContract.Column.USER, params[0]);
                 values.put(CronoContract.Column.DIFIC, params[1]);
                 values.put(CronoContract.Column.RESULT, params[2]);
