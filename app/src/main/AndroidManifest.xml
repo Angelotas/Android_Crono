@@ -21,6 +21,13 @@
             android:screenOrientation="portrait"></activity>
         <activity android:name=".MainActivity" android:theme="@style/MyMaterialTheme"
             android:screenOrientation="portrait"></activity>
+
+
+        <provider
+            android:name="com.example.ngel.crono.CronoProvider"
+            android:authorities="com.example.ngel.crono.CronoProvider"
+            android:exported="false"
+            />
     </application>
 
 </manifest>

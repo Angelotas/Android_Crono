@@ -53,7 +53,10 @@ public class ResultCronoFragment extends Fragment {
         resultado = this.getActivity().getIntent().getExtras().get("resultado").toString();
         this.formatearResultado(); //para formatear el resultado obtenido
 
-        new PostTask().execute(nombreUsuario,dificultad,resultado);
+        if (resultado.charAt(0) != '+'){ //solo guardaremos el resultado cuando no se haya pasado
+            new PostTask().execute(nombreUsuario,dificultad,resultado);
+        }
+
 
 
         tuResul1= (TextView) view.findViewById(R.id.txtResultado);
@@ -159,8 +162,8 @@ public class ResultCronoFragment extends Fragment {
                 values.put(CronoContract.Column.DIFIC, params[1]);
                 values.put(CronoContract.Column.RESULT, params[2]);
 
-                db.insert(CronoContract.TABLE, null, values); //se el inserta el contentValues en la bd
-                db.close();
+                //INSERCCIÓN DEL CONTENTVALUES EN LA BBDD CON CONTENT PROVIDER
+                Uri uri = getContext().getContentResolver().insert(CronoContract.CONTENT_URI, values); //Método insert del StatusProvider
                 return ("Se ha insertado correctamente los datos ");
             }
             catch (Exception e){
@@ -171,7 +174,7 @@ public class ResultCronoFragment extends Fragment {
 
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Toast.makeText(ResultCronoFragment.this.getActivity(), "resulado guardado correcamente", Toast.LENGTH_LONG).show();
+            Toast.makeText(ResultCronoFragment.this.getActivity(), "resulado guardado correctamente", Toast.LENGTH_LONG).show();
         }
     }
 }
