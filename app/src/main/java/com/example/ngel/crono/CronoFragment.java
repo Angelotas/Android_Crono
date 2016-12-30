@@ -139,7 +139,6 @@ public class CronoFragment extends Fragment {
             }
             catch (Exception e){
                 e.printStackTrace();
-                return ("Fallo en la inserccion de la bd");
             }
         }
 

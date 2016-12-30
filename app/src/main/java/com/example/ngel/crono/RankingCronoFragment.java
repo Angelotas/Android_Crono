@@ -27,6 +27,8 @@ public class RankingCronoFragment extends Fragment implements
 
     private static final String TAG = RankingCronoFragment.class.getSimpleName();
     private ListView lista;
+    private String dificultad; //obtenido del activity anterior
+
     private SimpleCursorAdapter mAdapter;
     private static final String[] FROM = {CronoContract.Column.USER,
             CronoContract.Column.DIFIC, CronoContract.Column.RESULT};
@@ -40,6 +42,8 @@ public class RankingCronoFragment extends Fragment implements
 
         View view= inflater.inflate(R.layout.fragment_rankingcrono, container, false);
 
+        dificultad = this.getActivity().getIntent().getExtras().get("dificult").toString();
+
         lista = (ListView) view.findViewById(R.id.list_ranking);
 
         return view;
@@ -48,8 +52,10 @@ public class RankingCronoFragment extends Fragment implements
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        String []arg= new String[]{dificultad}; //consular por el nivel de dificultad al que se ha jugado
+        String select= "dificultad=?";
         Cursor c=getActivity().getContentResolver().query(CronoContract.CONTENT_URI,
-                null, null, null, CronoContract.DEFAULT_SORT);  //Consulta de la tabla completa almacenada en el cursor
+                null, select, arg, CronoContract.DEFAULT_SORT);  //Consulta de la tabla completa almacenada en el cursor
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.list_item_crono,
                 c, FROM, TO, 0);
         lista.setAdapter(mAdapter);
