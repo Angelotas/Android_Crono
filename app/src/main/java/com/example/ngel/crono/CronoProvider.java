@@ -52,10 +52,7 @@ public class CronoProvider extends ContentProvider {
                 break;
             case CronoContract.CRONO_ITEM:  //Consulta de elemento con id
                 long id = ContentUris.parseId(uri);
-                where = CronoContract.Column.ID
-                        + "="
-                        + id
-                        + (TextUtils.isEmpty(selection) ? "" : " and ( " + selection + " )");
+                where = CronoContract.Column.ID + "=" + id + (TextUtils.isEmpty(selection) ? "" : " and ( " + selection + " )");
                 break;
             default:
                 throw new IllegalArgumentException("uri incorrecta: " + uri);
@@ -142,6 +139,29 @@ public class CronoProvider extends ContentProvider {
 
     @Override
     public int update(Uri uri, ContentValues values, String selection, String[] selectionArgs) {
-        return 0;
+        String where;
+
+        switch (sURIMatcher.match(uri)) {
+            case CronoContract.CRONO_DIR:
+                where = selection;
+                break;
+            case CronoContract.CRONO_ITEM:
+                long id = ContentUris.parseId(uri);
+                where = CronoContract.Column.ID
+                        + "="
+                        + id
+                        + (TextUtils.isEmpty(selection) ? "" : " and ( " + selection + " )");
+                break;
+            default:
+                throw new IllegalArgumentException("uri incorrecta: " + uri);
+        }
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        int ret = db.update(CronoContract.TABLE, values, where, selectionArgs);
+        if (ret > 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        Log.d(TAG, "registros actualizados: " + ret);
+        return ret;
+
     }
 }

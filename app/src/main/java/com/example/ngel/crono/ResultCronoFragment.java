@@ -150,22 +150,33 @@ public class ResultCronoFragment extends Fragment {
         //En segundo plano se introducirá en nombre, la dificultad y el resulado en la base de datos
         //Utiliza String como parámetros ,void en Progress y String como resultado
         //params[0] --> nombre usuario  || params[1] --> dificultad  ||  params[2] --> resultado
+        private static final String TAG = ".PostTask";
+        String result;
 
         @Override
         protected String doInBackground(String... params) {
 
             try{ //se realiza en segundo plano la insercción de datos en la bd
                 db = dbHelper.getWritableDatabase(); //se abre la BD para escritura
-                ContentValues values = new ContentValues();  //mapea los nombres de la base de datos con sus valores correspondientes.
-                values.clear(); //se limpia la base de datos
-                //mapeo de datos para cada elemento de la tabla
-                values.put(CronoContract.Column.USER, params[0]);
-                values.put(CronoContract.Column.DIFIC, params[1]);
-                values.put(CronoContract.Column.RESULT, params[2]);
 
-                //INSERCCIÓN DEL CONTENTVALUES EN LA BBDD CON CONTENT PROVIDER
-                Uri uri = getContext().getContentResolver().insert(CronoContract.CONTENT_URI, values); //Método insert del StatusProvider
-                return ("Se ha insertado correctamente los datos ");
+                if(comprobarExisteUser(params[0],params[1]) == true){ //el usuario con ese nombre y esa dificultad existe
+                    int numFilasUpdate= actualizarResultadoUser(params[0],params[1],params[2]);
+                    result = "Se ha actualizado correctamente el resulado. NUM FILAS "+numFilasUpdate;
+                    return (result);
+                }
+                else {    //el usuario es nuevo para esa dificultad
+                    //mapeo de datos para cada elemento de la tabla
+                    ContentValues values = new ContentValues();  //mapea los nombres de la base de datos con sus valores correspondientes.
+                    values.put(CronoContract.Column.USER, params[0]);
+                    values.put(CronoContract.Column.DIFIC, params[1]);
+                    values.put(CronoContract.Column.RESULT, params[2]);
+
+                    //INSERCCIÓN DEL CONTENTVALUES EN LA BBDD CON CONTENT PROVIDER
+                    Uri uri = getContext().getContentResolver().insert(CronoContract.CONTENT_URI, values); //Método insert del StatusProvider
+                    result = "Se ha insertado correctamente los datos ";
+                    return (result);
+                }
+
             }
             catch (Exception e){
                 return ("Fallo en la inserccion de la bd");
@@ -175,7 +186,34 @@ public class ResultCronoFragment extends Fragment {
 
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Toast.makeText(ResultCronoFragment.this.getActivity(), "resulado guardado correctamente", Toast.LENGTH_LONG).show();
+            Toast.makeText(ResultCronoFragment.this.getActivity(), result, Toast.LENGTH_LONG).show();
+        }
+
+        public boolean comprobarExisteUser(String nombre, String dificultad){
+            //REALIZA UNA CONSULTA PARA COMPROBAR SI EXISTE YA ESE USUARIO QUE HA JUGADO CON ESE NIVEL DE DIFICULTAD
+            //SELECT resultado FROM puntuaciones WHERE usuario='nombre' AND dificultad='dificultad'
+            String[] projection= new String[]{"resultado"}; //la columna usuario
+            String[] selectionArgs = new String[]{nombre,dificultad};
+            Cursor c =getActivity().getContentResolver().query(CronoContract.CONTENT_URI,
+                    projection, "usuario=? AND dificultad=?",selectionArgs, null);
+            if (c.getCount()!=0){ //SI QUE EXISTE YA ESE NOMBRE CON ESA DIFICULTAD
+                return true;
+            }
+            else  //EL USUARIO CON ESA DIFICULTAD NO EXISTE
+                return false;
+        }
+
+        public int actualizarResultadoUser(String nombre, String dificultad, String nuevoResultado){
+            //REALIZA UNA ACTUALIZACIÓN DEL RESULTADO DE UN DETERMINADO USUARIO CON UNA DETERMINADA DIFICULTADC
+            //UPDATE puntuaciones SET resultado='nuevoResultado' WHERE usuario'nombre' AND dificultad='dificultad'
+            ContentValues val= new ContentValues();
+            val.put("resultado",nuevoResultado); //almacena el nuevo valor para la columna resultado
+
+            String[] args= new String[]{nombre,dificultad}; //los datos=> el nombre de usuario y la dificultad
+            String select= "usuario=? AND dificultad=?";
+            return getActivity().getContentResolver().update(CronoContract.CONTENT_URI,val,select,args); //nº de filas afectadas
+
         }
     }
+
 }

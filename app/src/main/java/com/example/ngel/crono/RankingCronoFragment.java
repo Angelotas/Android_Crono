@@ -49,7 +49,7 @@ public class RankingCronoFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Cursor c=getActivity().getContentResolver().query(CronoContract.CONTENT_URI,
-                null, null, null, CronoContract.DEFAULT_SORT);
+                null, null, null, CronoContract.DEFAULT_SORT);  //Consulta de la tabla completa almacenada en el cursor
         mAdapter = new SimpleCursorAdapter(getActivity(), R.layout.list_item_crono,
                 c, FROM, TO, 0);
         lista.setAdapter(mAdapter);

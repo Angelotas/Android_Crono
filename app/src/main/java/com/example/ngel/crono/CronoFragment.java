@@ -50,6 +50,8 @@ public class CronoFragment extends Fragment {
                     end = System.currentTimeMillis(); //se para el crono
                     resultado = getResultado(start,end,Double.parseDouble(dificultad)); //si devuleve positivo es que se ha pasado
 
+
+
                     Intent intent= new Intent(getActivity(), MainActivity.class);
                     //se envia al siguiente activity el nombre de usuario, la dificultad y su resultado obtenido
                     intent.putExtra("nombreUsu",nombreUsuario);
